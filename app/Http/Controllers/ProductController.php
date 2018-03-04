@@ -6,9 +6,15 @@ use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Product\ProductResource;
 use App\Model\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware("auth:api");
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        return Auth::user();
         return ProductCollection::collection(Product::paginate(10));
        return Product::all();
     }
